@@ -1,0 +1,318 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+  KisanMitra Design System (Refined 10/10)
+  Philosophy: "Calm, Clear, & Trustworthy"
+  Target: Rural Farmers (High contrast, large touch targets, simple language)
+*/
+
+@layer base {
+  :root {
+    /* 
+      Color Palette: Earth & Nature (HSL)
+      - Primary Green: 142 76% 36% (A vibrant but deep growth green)
+      - Gradient Start: #2FAE63 (Fresh Leaf)
+      - Gradient End: #1F8A4C (Deep Forest)
+      - Secondary Earth: 35 90% 64% (Warm soil/harvest orange)
+      - Background: 60 30% 98% (Warm off-white, easy on eyes in sunlight)
+      - Text: 140 10% 15% (Dark green-grey for high contrast)
+    */
+
+    --background: 60 30% 98%;
+    --foreground: 140 10% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 140 10% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 140 10% 15%;
+
+    --primary: 142 76% 36%;
+    --primary-foreground: 355 100% 100%;
+
+    /* New Gradient Variables */
+    --primary-gradient-start: 145 58% 43%;
+    /* #2FAE63 */
+    --primary-gradient-end: 145 63% 33%;
+    /* #1F8A4C */
+
+    --secondary: 35 92% 58%;
+    /* More vibrant orange for actions */
+    --secondary-foreground: 20 20% 10%;
+
+    --muted: 100 20% 94%;
+    --muted-foreground: 100 10% 40%;
+
+    --accent: 35 90% 94%;
+    /* Light orange tint for active states */
+    --accent-foreground: 35 90% 40%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 120 10% 90%;
+    --input: 120 10% 90%;
+    --ring: 142 76% 36%;
+
+    --radius: 1.25rem;
+    /* Soft, large corners (20px) for friendlier look */
+
+    /* Custom Variables for Farmer UX */
+    --header-height: 4rem;
+    /* 64px fixed header */
+    --bottom-nav-height: 5rem;
+    /* 80px for better thumb reach */
+    --font-heading: 'Inter', sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+
+    --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+    /* Apple-like drift */
+    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04), 0 12px 24px -6px rgba(0, 0, 0, 0.03);
+    --shadow-float: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Dark mode support (optional, but good practice) */
+  .dark {
+    --background: 140 10% 10%;
+    --foreground: 60 30% 90%;
+
+    --card: 140 10% 12%;
+    --card-foreground: 60 30% 90%;
+
+    --popover: 140 10% 12%;
+    --popover-foreground: 60 30% 90%;
+
+    --primary: 142 60% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 35 90% 64%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 140 10% 16%;
+    --muted-foreground: 140 10% 60%;
+
+    --accent: 140 10% 16%;
+    --accent-foreground: 60 30% 90%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 140 10% 20%;
+    --input: 140 10% 20%;
+    --ring: 142 60% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    /* Prevent text scaling issues in landscape but allow user zoom */
+    -webkit-text-size-adjust: 100%;
+    height: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-size: 17px;
+    /* Increased base size for better readability */
+    line-height: 1.6;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    /* Disable pull-to-refresh to prevent accidental refreshes in app */
+    overscroll-behavior-y: none;
+  }
+
+  /* Typography Hierarchy */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold tracking-tight text-foreground;
+  }
+
+  h1 {
+    @apply text-2xl md:text-3xl lg:text-4xl;
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    @apply text-xl md:text-2xl;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    @apply text-lg md:text-xl font-medium;
+  }
+
+  /* Form Elements - Large touch targets */
+  input,
+  select,
+  textarea,
+  button {
+    @apply text-base;
+    /* Prevent automatic zoom on iOS (<16px) */
+    touch-action: manipulation;
+  }
+}
+
+@layer components {
+
+  /* 
+    Card System 
+    Clean, white cards with soft shadows.
+    "One screen = One clear purpose"
+  */
+  .card-farmer {
+    @apply bg-card rounded-[var(--radius)] border border-border/30 shadow-card transition-all duration-300;
+  }
+
+  .card-farmer:active {
+    @apply scale-[0.98];
+  }
+
+  .card-farmer:hover {
+    /* Subtle lift on desktop hover */
+    @apply md:shadow-float md:-translate-y-1;
+  }
+
+  /* 
+    Button System
+    Large, full-width on mobile, clear distinction.
+  */
+  .btn-primary {
+    @apply bg-gradient-to-b from-[#2FAE63] to-[#1F8A4C] text-white h-14 px-8 rounded-2xl font-semibold shadow-md active:shadow-inner transition-all active:scale-95 flex items-center justify-center gap-2 text-lg;
+  }
+
+  .btn-secondary {
+    @apply bg-white border-2 border-[#2FAE63]/20 text-[#1F8A4C] h-14 px-8 rounded-2xl font-medium shadow-sm active:bg-green-50 transition-all active:scale-95 flex items-center justify-center gap-2 text-base;
+  }
+
+  .btn-action {
+    @apply bg-secondary text-secondary-foreground h-14 px-8 rounded-2xl font-bold shadow-md transition-transform active:scale-95 flex items-center justify-center gap-2;
+  }
+
+  /* 
+    Section Containers 
+    Used to wrap content with consistent padding.
+  */
+  .section-container {
+    @apply px-4 py-6 md:px-6 md:py-8 max-w-3xl mx-auto w-full space-y-6 block;
+  }
+
+  /* 
+    Touch Target Helpers
+  */
+  .touch-target {
+    @apply min-h-[48px] min-w-[48px] flex items-center justify-center;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Glassmorphism for Fixed Header */
+  .glass-header {
+    @apply bg-white/90 backdrop-blur-lg border-b border-border/50 supports-[backdrop-filter]:bg-white/60;
+  }
+
+  /* Warm gradient background for pages */
+  .bg-warm-gradient {
+    @apply from-yellow-50/40 via-background to-background;
+    background-image: radial-gradient(ellipse at top, var(--tw-gradient-stops));
+  }
+
+  /* Mobile Bottom Nav */
+  .bottom-nav-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Text Shadows for contrast on overlays */
+  .text-shadow-sm {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Custom Animations */
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-slow {
+
+    0%,
+    100% {
+      opacity: 0.3;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.6;
+      transform: scale(1.05);
+    }
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 4s ease-in-out infinite;
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.5s ease-out forwards;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
+  }
+}
